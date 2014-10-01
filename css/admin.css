@@ -1,0 +1,17 @@
+.nimrod-fld { border:1px solid #EEE; padding:0 0 1.5em 1em; margin-right:15px; margin:1em auto; }
+  .nimrod-fld legend { font-weight:bold; }
+  .nimrod-fld p { margin-bottom:0; }
+  .nimrod-fld label  { font-weight:bold; }
+  form input[type=submit] { margin-right:2em; }
+  .nimrod-fld input, .nimrod-fld label { vertical-align:middle; line-height:100% !important; }
+.slider-control { float:left; width:60px; padding:1em 1em 0 1em; margin:1.5em 2em 1.5em 0; text-align:center; border:1px solid #CCC; background-color:#EEE; }
+.slider-control input { width:40px; text-align:center; border:1px solid #CCC; color:#f6931f; font-weight:bold; }
+.slider-control .slider-outer { text-align:center; width:40px; margin:0.5em auto 1em auto; }
+.slider-control .slider-inner { width:15px; padding:1em; background-color:#F5F5F5; border:1px solid #CCC; border-top-color:#999; border-left-color:#999; }
+.slider-control .slider-bar { height:150px; }
+.slider-control .slider-amount { margin-top:0.5em; }
+.slider-control label { height:30px; display:inline-block; }
+
+/* Collapse vertical height of table rows. */
+.nimrod-fld table { width:99%; }
+.nimrod-fld table tbody th.check-column { padding:0 !important; }
