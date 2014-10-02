@@ -24,37 +24,7 @@ if ( !isset($_POST['src-files']) ) {
 }
 $src_files = explode(",", $_POST['src-files']);
 
-if ( isset($_POST['confirm-contrib']) ) {
-
-  $feats = array();
-  foreach ($_COOKIE as $key => $value) {
-    if ( str_startswith($key, 'nimrod-feat') ) {
-      $feats[$key] = $value;
-    }
-  }
-  
-  $post_data = array(
-    'feats' => json_encode($feats), 
-    'files' => json_encode($src_files),
-    'lang'  => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
-    'url'   => $_SERVER['REQUEST_URI'],
-    'uid'   => NimrodLogger::getUid(),
-  );
-  $request = http_request(
-              'http://kant3.prhlt.upv.es/nimrod/save-contrib.php',
-              array(
-                      CURLOPT_POST => true,
-                      CURLOPT_POSTFIELDS => $post_data
-                   )
-             );
-  if ( $transfer['errnum'] > 0 ) {
-    echo '<h3>' . $request['errmsg'] . '</h3>';
-  } else {
-    echo '<h3>' . $request['content'] . '</h3>';
-  }
-  die( '<p>File contribution completed. ' . $admin_link . '</p>' );
-  
-} elseif ( isset($_POST['confirm-delete']) ) {
+if ( isset($_POST['confirm-delete']) ) {
 
   if ( intval($_POST['confirm-delete']) === 1 ) {
     
@@ -162,7 +132,7 @@ if ( $bulk_action ) {
 
 $pot_files = $bulk_action ? $bulk_collection : array_keys($npot_collection);
 $num_files = count($pot_files);
-echo '<p>' . sprintf( 'You have chosen to %1$s %2$d Nimrod POT %3$s for all of the previously selected source files.', 
+echo '<p>' . sprintf( 'You have chosen to %1$s %2$d Nimrod POT %3$s for all of the previously selected source files. There you are:', 
               $action, $num_files, pluralize($num_files, 'file') ) . '</p>';
 
 $links = array();
@@ -219,7 +189,7 @@ if ( $bulk_action ) {
     echo '<li><a href="' . $url . '">' . $pot_name . '</a></li>';
   }
   echo '</ul>';
-  
+  echo '<p>Now you can ' . $admin_link . '</p>';
 }
 
 $csv_links = implode( ',', array_unique($links) );
@@ -242,17 +212,48 @@ $csv_paths = implode( ',', array_unique($paths) );
 
 <?php elseif ( $action == AdminAction::REARRANGE && function_exists('curl_init') ): ?>
 
-  <h2>Science Anyone?</h2>
-  <p>
-    By clicking on the following button, the POT <?php echo pluralize($num_files, 'file'); ?> above will be sent to a centralized repository. 
-    Doing so will help us to improve the development of this plugin. 
-    Note that your data is completely anonymous and will not be shared with third parties. 
-  </p>
+  <?php if ( get_option('nimrod_contrib') == "off" ): ?>
+
+    <h2>Science Anyone?</h2>
+    <p>
+      You can contribute to improving this plugin and advance research 
+      by checking the <tt>Contribute</tt> checkbox in the 
+      <a href="<?php echo admin_url('options-general.php?page=nimrod_settings'); ?>">Settings</a> page.
+    </p>
+    <p>
+      Note that your data is completely anonymous and will not be shared with third parties. 
+      We will analyze the data for research purposes.
+      <em>Thank you in advance!</em>
+    </p>
   
-  <form action="" method="post">
-    <input type="submit" value="Contribute" /> <em>Thank you in advance!</em>
-    <input type="hidden" name="confirm-contrib" value="1" />
-    <input type="hidden" name="src-files" value="<?php echo $csv_paths; ?>" />
-  </form>
+  <?php else: ?>
+
+    <?php
+    $feats = array();
+    foreach ($_COOKIE as $key => $value) {
+      if ( str_startswith($key, 'nimrod-feat') ) {
+        $feats[$key] = $value;
+      }
+    }
+    
+    $post_data = array(
+      'feats' => json_encode($feats), 
+      'files' => json_encode($src_files),
+      'lang'  => $_SERVER['HTTP_ACCEPT_LANGUAGE'],
+      'url'   => $_SERVER['REQUEST_URI'],
+      'uid'   => NimrodLogger::getUid(),
+    );
+    $request = http_request(
+                'http://kant3.prhlt.upv.es/nimrod/save-contrib.php',
+                array(
+                        CURLOPT_POST => true,
+                        CURLOPT_POSTFIELDS => $post_data
+                     )
+               );
+#    $msg = $transfer['errnum'] > 0 ? $request['errmsg'] : $request['content'];
+#    echo '<h3>' . $msg . '</h3>';
+    ?>
+    
+  <?php endif; ?>
   
 <?php endif; ?>
