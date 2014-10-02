@@ -44,8 +44,9 @@ class Nimrod implements NimrodInterface {
   public function getUrl() 
   {
     $path = $this->getPath();
-    $root = $_SERVER['DOCUMENT_ROOT'];
-    return substr( $path, strlen( $root ) );
+    $admin_dir = dirname( $_SERVER['SCRIPT_NAME'] );
+    $web_root  = dirname( $admin_dir );
+    return substr( $path, strpos($path, $web_root) );
   }
 
   /** 
