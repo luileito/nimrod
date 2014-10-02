@@ -16,7 +16,7 @@ function n_setting_dir_change( $dir ) {
   } else if ( !is_writable($dir) ) {
     $status = array( 'error', __( 'Directory is not writable', 'nimrod') );
   } else {
-    $status = array( 'updated', __('Directory saved successfully', 'nimrod') );
+    $status = array( 'updated', __('Settings saved successfully', 'nimrod') );
   }
   return $status;
 }
@@ -62,11 +62,23 @@ if ( !$showlogo ) {
   $showlogo = "off";
 }
 update_option( $opt_logo, $showlogo );
-
 if (isset($conf)) {
   $conf[$opt_logo] = $showlogo;
 } else {
   $conf = array( $opt_logo => $showlogo );
+}
+
+// This setting is a checkbox, so it will be NULL if not checked.
+$opt_contrib = 'nimrod_contrib';
+$showcontrib = $_POST[$opt_contrib];
+if ( !$showcontrib ) {
+  $showcontrib = "off";
+}
+update_option( $opt_contrib, $showcontrib );
+if (isset($conf)) {
+  $conf[$opt_contrib] = $showcontrib;
+} else {
+  $conf = array( $opt_contrib => $showcontrib );
 }
 
 file_put_contents( $config_file, json_encode($conf) );
