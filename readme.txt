@@ -6,8 +6,8 @@ Tags: gettext, translation, localization, internationalization
 Requires at least: 3.0.1
 Tested up to: 3.4
 Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Prioritize gettext entries based on UI elements usage.
 
@@ -23,4 +23,9 @@ Please refer to the followinf research paper for technical info:
 
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+
+== Customization ==
+
+Go to `Plugins > Nimrod` admin menu and start using the plugin.
+You can edit your settings in `Settings > Nimrod` admin menu.
 
