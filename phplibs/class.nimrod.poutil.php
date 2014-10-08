@@ -234,24 +234,29 @@ class NimrodPOUtil
         $wts[$key] = $value;
       }
     }
-    
+    $feats = array();
     foreach ($this->db as $id => $entries) {
-      $scs[$id] = 0;
       foreach ($entries as $key => $value) {
-        switch($key) {
+        switch ($key) {
           case self::KEY_COM_TR:
           case self::KEY_COM_XT:
           case self::KEY_REF:
-            $feat = count($value);
+            $feats[$key][] = count($value);
             break;
           case self::KEY_EL_NUM:
           case self::KEY_EL_VIS:
           case self::KEY_EL_SIZE:
-            $feat = $value;
+            $feats[$key][] = $value;
             break;
           default:
             break;
         }
+      }
+    }
+    whiten($feats);
+    foreach ($this->db as $id => $entries) {
+      $scs[$id] = 0;
+      foreach ($feats as $key => $feat) {
         $scs[$id] += $feat * $wts[$key];
       }
     }

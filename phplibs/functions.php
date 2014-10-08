@@ -140,3 +140,81 @@ if ( !function_exists('http_request') ) {
   }
 }
 
+if ( !function_exists('array_mean') ) {
+  /**
+   * Compute the mean of an array of values.
+   * @param array  $arr Input array.
+   * @return float
+   */
+  function array_mean($arr) {
+    return array_sum($arr) / count($arr);
+  }
+}
+
+if ( !function_exists('array_sd') ) {
+  /**
+   * Compute the standard deviation of an array of values.
+   * @param array  $arr  Input array.
+   * @param float  $mean Array mean (optional).
+   * @return float
+   */
+  function array_sd($arr, $mean = NULL) {
+    if ( is_null($mean) ) $mean = array_mean($arr);
+    $variance = 0;
+    foreach ($arr as $val) {
+      $diff = $val - $mean;
+      $variance += $diff * $diff;
+    }
+    return sqrt($variance / count($arr));
+  }
+}
+
+if ( !function_exists('array_transpose') ) {
+  /**
+   * Transpose array, i.e., swap columns by rows.
+   * @param array  $arr The input array.
+   * @return array
+   */
+  function array_transpose($arr) {
+    array_unshift($array, null);
+    return call_user_func_array('array_map', $array);
+  }
+}
+
+if ( !function_exists('whiten') ) {
+  /**
+   * Standardize features so that each has zero mean and unit variance.
+   * The observations matrix is passed as reference. 
+   * All array keys are preserved.
+   * @param array  $obs Multidimensional matrix.
+   */
+  function whiten( &$obs ) {
+    $keys_rows = array_keys($obs);
+    $keys_cols = array();
+    foreach ($obs as $o => $arr) {
+      $keys_cols[] = array_keys($arr);
+    }
+    $cols = array_transpose($obs);
+    $whiten = array();
+    foreach ($cols as $c => $arr) {
+      $mean = array_mean($arr);
+      $sd   = array_sd($arr, $mean);
+      $whiten[$c] = array( 'mean' => $mean, 'sd' => $sd );
+    }
+    foreach ($cols as $c => $arr) {
+      $data = $whiten[$c];
+      foreach ($arr as $a => $val) {
+        $cols[$c][$a] = ($val - $data['mean']) / $data['sd'];
+      }
+    }
+    $cols = array_transpose($cols);
+    foreach ($cols as $c => $arr) {
+      $kr = $keys_rows[$c];
+      foreach ($arr as $a => $val) {
+        $kc = $keys_cols[$a];
+        $obs[$kr][ $kc[$a] ] = $val;
+      }
+    }
+  }
+}
+
