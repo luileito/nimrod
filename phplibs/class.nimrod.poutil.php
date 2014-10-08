@@ -148,13 +148,13 @@ class NimrodPOUtil
       foreach ($entries as $key => $value) {
         switch ($key) {
           case self::KEY_COM_TR:
-            $data .= $this->_arrtok($value, self::TOK_COM_TR);
+            $data .= $this->arrtok($value, self::TOK_COM_TR);
             break;
           case self::KEY_COM_XT:
-            $data .= $this->_arrtok($value, self::TOK_COM_XT);
+            $data .= $this->arrtok($value, self::TOK_COM_XT);
             break;
           case self::KEY_REF:
-            $data .= $this->_arrtok($value, self::TOK_REF);
+            $data .= $this->arrtok($value, self::TOK_REF);
             break;
           case self::KEY_MSGCTXT:
           case self::KEY_MSGID:
@@ -182,7 +182,7 @@ class NimrodPOUtil
    * @param string $tok   The token.
    * @return string
    */
-  private function _arrtok( $lines, $tok ) 
+  private function arrtok( $lines, $tok ) 
   {
     $data = "";
     foreach ($lines as $line) {

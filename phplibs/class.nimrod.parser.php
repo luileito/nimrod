@@ -7,6 +7,7 @@
 
 /** Class dependencies. */
 require_once 'functions.php';
+require_once 'interface.nimrod.parser.php';
 require_once 'class.extdom.php';
 require_once 'class.nimrod.logger.php';
 
