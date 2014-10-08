@@ -90,18 +90,9 @@ class NimrodPOUtil
         $entry = array();             // Init entry
         $entry[self::KEY_NID] = $id;  // Save the ID for later multisorting
         $header_saved = TRUE;         // Flag line to indicate end of header
-      } elseif ( strpos($line, self::TOK_COM_TR) === 0 && isset($id) ) {
-        // Parse translator comment(s).
-        $entry[self::KEY_COM_TR][] = substr($line, strlen(self::TOK_COM_TR));
-        // Remember potential string visibility on the UI.
-        if ( strpos($line, 'TRANSLATORS:') !== FALSE ) {
-          $entry[self::KEY_EL_VIS] = (int) (strpos($line, "element") !== FALSE);
-        }
-        // Remember also the number of occurrences, on a per-element basis.
-        @preg_match(substr($line, 1), '/appears on ([0-9]+)/', $matches);
-        if ($matches) $el_num += (int) $matches[1];
-        else $el_num += 1;
-        $entry[self::KEY_EL_NUM] = $el_num;
+      } elseif ( strpos($line, self::TOK_FREQ) === 0 ) {
+        // Parse message (overall) frequency.
+        $entry[self::KEY_FREQ] = (int) substr($line, strlen(self::TOK_FREQ));
       } elseif ( strpos($line, self::TOK_COM_XT) === 0 && isset($id) ) {
         // Parse extracted comment(s).
         $entry[self::KEY_COM_XT][] = substr($line, strlen(self::TOK_COM_XT));
@@ -119,9 +110,6 @@ class NimrodPOUtil
       } elseif ( strpos($line, self::KEY_MSGSTR . ' ') === 0 ) {
         // Parse message translation.
         $entry[self::KEY_MSGSTR] = self::unquotize( substr($line, strlen(self::KEY_MSGSTR) + 1) );
-      } elseif ( strpos($line, self::KEY_FREQ . ' ') === 0 ) {
-        // Parse message (overall) frequency.
-        $entry[self::KEY_FREQ] = substr($line, strlen(self::KEY_FREQ) + 1);
       } elseif ( !empty($line) ) {
         // Save remaining fields of entry.
         $entry['other'][] = $line;
@@ -129,6 +117,18 @@ class NimrodPOUtil
         // End of entry, so just save it.
         $this->db[$id] = $entry;
         $el_num = 0;
+      } elseif ( strpos($line, self::TOK_COM_TR) === 0 && isset($id) ) {
+        // Parse translator comment(s).
+        $entry[self::KEY_COM_TR][] = substr($line, strlen(self::TOK_COM_TR));
+        // Remember potential string visibility on the UI.
+        if ( strpos($line, 'TRANSLATORS:') !== FALSE ) {
+          $entry[self::KEY_EL_VIS] = (int) (strpos($line, "element") !== FALSE);
+        }
+        // Remember also the number of occurrences, on a per-element basis.
+        @preg_match(substr($line, 1), '/appears on ([0-9]+)/', $matches);
+        if ($matches) $el_num += (int) $matches[1];
+        else $el_num += 1;
+        $entry[self::KEY_EL_NUM] = $el_num;
       }
       if ( !$header_saved ) $this->header .= $line . PHP_EOL;
     }
@@ -224,8 +224,9 @@ class NimrodPOUtil
     $wts = array(
       self::KEY_COM_TR  => 0,
       self::KEY_COM_XT  => 0,
-      self::KEY_EL_NUM  => 0,
+      self::KEY_FREQ    => 0,
       self::KEY_REF     => 0,
+      self::KEY_EL_NUM  => 0,
       self::KEY_EL_VIS  => 0,
       self::KEY_EL_SIZE => 0,
     );
