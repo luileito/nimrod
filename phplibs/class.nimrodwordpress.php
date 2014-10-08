@@ -93,8 +93,8 @@ class WP_Nimrod extends Nimrod
    */
   function adminMenu() 
   {
-    add_submenu_page( 'plugins.php', 'Nimrod Admin', 'Nimrod', 'manage_options', 'nimrod_admin', array( $this, 'adminPage' ) );
-    add_options_page( 'Settings Admin', 'Nimrod', 'manage_options', 'nimrod_settings', array($this, 'settingsPage') );
+    add_submenu_page( 'plugins.php', __('Nimrod Admin', 'nimrod'), 'Nimrod', 'manage_options', 'nimrod_admin', array( $this, 'adminPage' ) );
+    add_options_page( __('Nimrod Settings', 'nimrod'), 'Nimrod', 'manage_options', 'nimrod_settings', array($this, 'settingsPage') );
   }
 
   /**

@@ -9,7 +9,7 @@ wp_enqueue_script( 'jquery-cookie', plugins_url('jslibs/jquery-cookie.js', __FIL
 <div class="wrap">
 
 <?php screen_icon(); ?>
-<h2><?php echo __("Nimrod's admin panel") ?></h2>
+<h2><?php echo __("Nimrod's admin panel", 'nimrod') ?></h2>
 
 <?php if ( !empty($_POST) ): ?>
 
@@ -22,7 +22,7 @@ wp_enqueue_script( 'jquery-cookie', plugins_url('jslibs/jquery-cookie.js', __FIL
     include 'admin-mixer.php'; 
     include 'admin-table.php'; 
     ?>
-    <input type="submit" class="button-primary" name="action-rearrange" value="<?php echo __('Rearrange gettext messages') ?>" />
+    <input type="submit" class="button-primary" name="action-rearrange" value="<?php echo __('Rearrange gettext messages', 'nimrod') ?>" />
   </form>
 
 <?php endif; ?>

@@ -17,20 +17,20 @@ function n_create_slider($id, $label) {
 
 
 <fieldset class="nimrod-fld">
-  <legend><?php echo __("Feature mixer") ?></legend>
+  <legend><?php echo __("Feature mixer", 'nimrod') ?></legend>
   
-  <p><?php echo __("Choose the importance you'd wish to assign to each feature and click on the <tt>Rearrange gettext messages</tt> button at the bottom of this page.") ?></p>
+  <p><?php echo __("Choose the importance you'd wish to assign to each feature and click on the <tt>Rearrange gettext messages</tt> button at the bottom of this page.", 'nimrod') ?></p>
   
-  <?php echo n_create_slider(NimrodPOUtil::KEY_COM_TR,  __("Translator comments"))    // Special Nimrod comments for a msgid
-           , n_create_slider(NimrodPOUtil::KEY_COM_XT,  __("Developer comments"))     // Standard 'extracted comments' for that msgid
-           , n_create_slider(NimrodPOUtil::KEY_REF,     __("Number of references"))   // Number of source files that use that msgid
-           , n_create_slider(NimrodPOUtil::KEY_FREQ,    __("String frequency"))       // Number of times the msgid appeared; counting also across pages
-           , n_create_slider(NimrodPOUtil::KEY_EL_NUM,  __("Element frequency"))      // Number of elements having the same msgid, on a per-page basis
-           , n_create_slider(NimrodPOUtil::KEY_EL_VIS,  __("String visibility"))      // After page rendering
-           , n_create_slider(NimrodPOUtil::KEY_EL_SIZE, __("Element size"))           // Bounding box size
-           , n_create_slider(NimrodPOUtil::KEY_EL_INTERACT, __("Element interactions")) // TODO
-           , n_create_slider(NimrodPOUtil::KEY_EL_CONTRAST, __("Element contrast"))     // TODO
-           , n_create_slider(NimrodPOUtil::KEY_EL_SEMANTIC, __("Element semantics"))    // TODO
+  <?php echo n_create_slider(NimrodPOUtil::KEY_COM_TR,  __("Translator comments", 'nimrod'))    // Special Nimrod comments for a msgid
+           , n_create_slider(NimrodPOUtil::KEY_COM_XT,  __("Developer comments", 'nimrod'))     // Standard 'extracted comments' for that msgid
+           , n_create_slider(NimrodPOUtil::KEY_REF,     __("Number of references", 'nimrod'))   // Number of source files that use that msgid
+           , n_create_slider(NimrodPOUtil::KEY_FREQ,    __("String frequency", 'nimrod'))       // Number of times the msgid appeared; counting also across pages
+           , n_create_slider(NimrodPOUtil::KEY_EL_NUM,  __("Element frequency", 'nimrod'))      // Number of elements having the same msgid, on a per-page basis
+           , n_create_slider(NimrodPOUtil::KEY_EL_VIS,  __("String visibility", 'nimrod'))      // After page rendering
+           , n_create_slider(NimrodPOUtil::KEY_EL_SIZE, __("Element size", 'nimrod'))           // Bounding box size
+           , n_create_slider(NimrodPOUtil::KEY_EL_INTERACT, __("Element interactions", 'nimrod')) // TODO
+           , n_create_slider(NimrodPOUtil::KEY_EL_CONTRAST, __("Element contrast", 'nimrod'))     // TODO
+           , n_create_slider(NimrodPOUtil::KEY_EL_SEMANTIC, __("Element semantics", 'nimrod'))    // TODO
            ;
   ?>
   

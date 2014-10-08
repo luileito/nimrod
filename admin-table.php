@@ -4,7 +4,7 @@ require_once 'phplibs/class.nimrod.logger.php';
 ?>
 
 <fieldset class="nimrod-fld">
-  <legend><?php echo __("My localization files") ?></legend>
+  <legend><?php echo __("My localization files", 'nimrod') ?></legend>
 
   <?php
   function table_actions( $placement ) {
@@ -12,17 +12,17 @@ require_once 'phplibs/class.nimrod.logger.php';
     $commands  = '<div class="tablenav top">';
     $commands .=   '<div class="alignleft actions">';
     $commands .=   '<select name="action-'.$placement.'">';
-    $commands .=      '<option value="">' . __("Bulk Actions") . '</option>';
-    $commands .=      '<option value="download">' . __("Download") . '</option>';
-    $commands .=      '<option value="delete">' . __("Delete") . '</option>';
+    $commands .=      '<option value="">' . __("Bulk Actions", 'nimrod') . '</option>';
+    $commands .=      '<option value="download">' . __("Download", 'nimrod') . '</option>';
+    $commands .=      '<option value="delete">' . __("Delete", 'nimrod') . '</option>';
     $commands .=    '</select>';
-    $commands .=    '<input type="submit" id="doaction" class="button-secondary action" value="' . __("Apply") . '">';
+    $commands .=    '<input type="submit" id="doaction" class="button-secondary action" value="' . __("Apply", 'nimrod') . '">';
     $commands .=  '</div>';
     $commands .=  '<div class="alignleft actions">';
     $commands .=     '<select name="contrib-'.$placement.'">';
-    $commands .=      '<option value="">' . __("Contribution type") . '</option>';
-    $commands .=      '<option value="mine">' . __("Mine only") . '</option>';
-    $commands .=      '<option value="full">' . __("From everyone") . '</option>';
+    $commands .=      '<option value="">' . __("Contribution type", 'nimrod') . '</option>';
+    $commands .=      '<option value="mine">' . __("Mine only", 'nimrod') . '</option>';
+    $commands .=      '<option value="full">' . __("From everyone", 'nimrod') . '</option>';
     $commands .=   '</select>';
     $commands .=   '</div>';
     $commands .=   '<br class="clear"/>';
@@ -30,9 +30,9 @@ require_once 'phplibs/class.nimrod.logger.php';
     return $commands;
   }
   $table_headers  = '<th scope="col" id="cb" class="manage-column column-cb check-column"><input type="checkbox"></th>';
-  $table_headers .= '<th scope="col" id="title" class="manage-column">' . __("Source file") . '</th>';
-  $table_headers .= '<th scope="col" id="author" class="manage-column">' . __("Number of resource strings") . '</th>';
-  $table_headers .= '<th scope="col" id="categories" class="manage-column">' . __("Associated POT files") . '</th>';
+  $table_headers .= '<th scope="col" id="title" class="manage-column">' . __("Source file", 'nimrod') . '</th>';
+  $table_headers .= '<th scope="col" id="author" class="manage-column">' . __("Number of resource strings", 'nimrod') . '</th>';
+  $table_headers .= '<th scope="col" id="categories" class="manage-column">' . __("Associated POT files", 'nimrod') . '</th>';
   ?>
 
   <?php echo table_actions('top'); ?>
@@ -42,7 +42,7 @@ require_once 'phplibs/class.nimrod.logger.php';
   <tbody>
   <?php 
   if ( !defined('GETTEXT_LOG_UNTRANSLATED') ) {
-    echo '<td colspan="4">' . __('No directory specified. Go and set one at <a href="options-general.php?page=nimrod_settings">the settings page</a>.') . '</td>';
+    echo '<td colspan="4">' . sprintf(__('No directory specified. Go and set one at <a href="%s">the settings page</a>.', 'nimrod'), 'options-general.php?page=nimrod_settings') . '</td>';
   } else {
     $iterator = new RecursiveIteratorIterator(
                   new RecursiveDirectoryIterator(GETTEXT_LOG_UNTRANSLATED), 
@@ -82,10 +82,9 @@ require_once 'phplibs/class.nimrod.logger.php';
     echo '</tr>';      
 #      if ( $num_contributors > 0 ) {
 #        $contrib_msg  = '<input type="checkbox" name="merge-all" /> ';
-#        $contrib_msg .= 'Merge data from all user contributions ';
-#        $contrib_msg .= '(' . sprintf('%d users', $num_contributors) . ')';
+#        $contrib_msg .= sprintf(__('Merge data from all user contributions (%d users).', 'nimrod'), $num_contributors);
 #      } else {
-#        $contrib_msg = 'There are no user contributions yet.';
+#        $contrib_msg = __('There are no user contributions yet.', 'nimrod);
 #      }
 #      echo '<p>' . $contrib_msg . '</p>';
   }

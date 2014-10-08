@@ -6,7 +6,7 @@
     Version: 1.0
     Author: Luis A. Leiva
     Author URI: http://personales.upv.es/luileito/
-    License: dual MIT + GPL2
+    License: dual MIT + GPL3
 */
 
 $n_dir = get_option('nimrod_dir');

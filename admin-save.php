@@ -16,11 +16,14 @@ class AdminContrib
   const FULL  = "full";
 }
 
-$admin_link = '<a href="">Go back to admin panel</a>.';
+function report_msg($msg) {
+  $admin_link = '<a href="">' . __('Go back to admin panel', 'nimrod') . '</a>';
+  return '<p>' . sprintf('%s &there4; %s', $msg, $admin_link) . '</p>';
+}
 
 // In *any* case this array must exist
 if ( !isset($_POST['src-files']) ) {
-  die('<p>No files were selected! ' . $admin_link . '</p>');
+  die( report_msg(__('No files were selected!', 'nimrod')) );
 }
 $src_files = explode(",", $_POST['src-files']);
 
@@ -43,9 +46,9 @@ if ( isset($_POST['confirm-delete']) ) {
       }
       rmdir($abs_dir);
     }
-    die( '<p>File deletion completed. ' . $admin_link . '</p>' );
+    die( report_msg(__('File deletion completed', 'nimrod')) );
   } else {
-    die( '<p>File deletion cancelled. ' . $admin_link . '</p>' );
+    die( report_msg(__('File deletion cancelled', 'nimrod')) );
   }
   
 }
@@ -132,7 +135,7 @@ if ( $bulk_action ) {
 
 $pot_files = $bulk_action ? $bulk_collection : array_keys($npot_collection);
 $num_files = count($pot_files);
-echo '<p>' . sprintf( 'You have chosen to %1$s %2$d Nimrod POT %3$s for all of the previously selected source files. There you are:', 
+echo '<p>' . sprintf( __('You have chosen to %1$s %2$d Nimrod POT %3$s for all of the previously selected source files. There you are:'), 
               $action, $num_files, pluralize($num_files, 'file') ) . '</p>';
 
 $links = array();
@@ -147,7 +150,7 @@ if ( $bulk_action ) {
     $zip_path = $user_dir . '/' . $zip_name;
     $zip_link = plugin_dir_url($zip_path) . $zip_name;
     if ( !$zip->open( $zip_path, ZIPARCHIVE::OVERWRITE ) ) {
-      die('<p>There was an error when creating the ZIP file <tt>' . $zip_path . '</tt>. ' . $admin_link . '</p>');
+      die( report_msg(sprintf(__('There was an error when creating the ZIP file <tt>%s</tt>', 'nimrod'), $zip_path)) );
     }
   }
   
@@ -162,7 +165,7 @@ if ( $bulk_action ) {
     if ( $action == AdminAction::DOWNLOAD ) {
       $abs_path = GETTEXT_LOG_UNTRANSLATED . '/' . $rel_path;
       if ( !$zip->addFile($abs_path, $rel_path) ) {
-        die('<p>There was an error when adding the file <tt>' . $abs_path . '</tt>. ' . $admin_link . '</p>');
+        die( report_msg(sprintf(__('There was an error when adding the file <tt>%s</tt>', 'nimrod'), $abs_path)) );
       }
     }
   }
@@ -189,7 +192,7 @@ if ( $bulk_action ) {
     echo '<li><a href="' . $url . '">' . $pot_name . '</a></li>';
   }
   echo '</ul>';
-  echo '<p>Now you can ' . $admin_link . '</p>';
+  report_msg(__('Done.', 'nimrod'), $abs_path);
 }
 
 $csv_links = implode( ',', array_unique($links) );
@@ -198,32 +201,28 @@ $csv_paths = implode( ',', array_unique($paths) );
 
 <?php if ( $action == AdminAction::DOWNLOAD ): ?>
 
-  <p>A <a href="<?php echo $zip_link; ?>">ZIP file</a> has been created for your convenience. <?php echo $admin_link; ?></p>
+  <?php echo report_msg(sprintf(__('A <a href="%s">ZIP file</a> has been created for your convenience.', 'nimrod'), $zip_link)); ?>
 
 <?php elseif ( $action == AdminAction::DELETE ): ?>
 
   <form action="" method="post">
-    <strong>Are you sure?</strong>
-    <input type="radio" name="confirm-delete" value="1" checked="checked" /> Yes
-    <input type="radio" name="confirm-delete" value="0" /> No
+    <strong><?php echo __('Are you sure?', 'nimrod'); ?></strong>
+    <input type="radio" name="confirm-delete" value="1" checked="checked" /> <?php echo __('Yes', 'nimrod'); ?>
+    <input type="radio" name="confirm-delete" value="0" /> <?php echo __('No', 'nimrod'); ?>
     <input type="hidden" name="src-files" value="<?php echo $csv_paths; ?>" />
-    <input type="submit" value="Confirm" />
+    <input type="submit" value="<?php echo __('Confirm', 'nimrod'); ?>" />
   </form>
 
 <?php elseif ( $action == AdminAction::REARRANGE && function_exists('curl_init') ): ?>
 
   <?php if ( get_option('nimrod_contrib') == "off" ): ?>
 
-    <h2>Science Anyone?</h2>
+    <h2><?php echo __('Science Anyone?', 'nimrod'); ?></h2>
     <p>
-      You can contribute to improving this plugin and advance research 
-      by checking the <tt>Contribute</tt> checkbox in the 
-      <a href="<?php echo admin_url('options-general.php?page=nimrod_settings'); ?>">Settings</a> page.
+      <?php echo sprintf(__('You can contribute to improving this plugin and advance research by checking the <tt>Contribute</tt> checkbox in the <a href="%s">Settings</a> page.', 'nimrod'), admin_url('options-general.php?page=nimrod_settings')); ?>
     </p>
     <p>
-      Note that your data is completely anonymous and will not be shared with third parties. 
-      We will analyze the data for research purposes.
-      <em>Thank you in advance!</em>
+      <?php echo __('Note that your data is completely anonymous and will not be shared with third parties. We will analyze the data for research purposes. <em>Thank you in advance!</em>'); ?>
     </p>
   
   <?php else: ?>
