@@ -248,7 +248,9 @@ class NimrodLogger implements NimrodLoggerInterface
     $url  = "http" . ($_SERVER['HTTPS'] == "on" ? 's' : NULL) . '://';
     $url .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $url .= !empty($_SERVER['QUERY_STRING']) ? '&' : '?';
-    $url .= 'xvis=' . urlencode( $xpath );
+    if ( strpos($url, 'xvis=') === FALSE ) {
+      $url .= 'xvis=' . urlencode( $xpath );
+    }
     $msg = NimrodPOUtil::TOK_COM_TR . $url;
     // Don't add newline ending to $msg
     return $msg;
